@@ -7,7 +7,7 @@ import * as path from "path";
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
 
 // Routes
-import { index } from "./routes/index";
+import userRoute from "./routes/user";
 // Create Express server
 export const app = express();
 
@@ -22,7 +22,7 @@ app.use(cors());
 app.use(logger("dev"));
 
 app.use(express.static(path.join(__dirname, "../public")));
-app.use("/", index);
+app.use("/user", userRoute);
 
 app.use(errorNotFoundHandler);
 app.use(errorHandler);
