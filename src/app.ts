@@ -16,7 +16,7 @@ app.set("port", process.env.PORT || 4000);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 
-//Middleware
+// Middleware
 app.use(express.json());
 app.use(helmet());
 app.use(cors());
@@ -25,7 +25,6 @@ app.use(logger("dev"));
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Routes
-
 expressJSDocSwagger(app)(swaggerConfig); // path: /api-docs
 app.use("/user", userRoute);
 

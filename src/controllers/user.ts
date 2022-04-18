@@ -11,7 +11,6 @@ export async function updateUser(
     res: Response,
     next: NextFunction,
 ) {
-    console.log(req.body);
     const updated = await UserRepository.update(req.body);
     res.status(200).json(updated);
 }
