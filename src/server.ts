@@ -1,7 +1,6 @@
 import { app } from "./app";
 
 const port = app.get("port");
-
 const server = app.listen(port, onListening);
 server.on("error", onError);
 

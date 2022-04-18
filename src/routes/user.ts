@@ -39,7 +39,34 @@ const validateUserInfo = [
     validate,
 ];
 
+/**
+ * @openapi
+ * /user/info:
+ *   get:
+ *     description: 유저 정보 가져오기
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
 router.get("/info", userController.getUser);
+
+/**
+ * @openapi
+ * /user/info:
+ *   put:
+ *     tags: [User]
+ *     description: 유저 정보 수정하기
+ *     parameters:
+ *       - name: requestBody
+ *         in: body
+ *         description: User's name.
+ *         required: false
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
 router.put("/info", validateUserInfo, userController.updateUser);
 
 export default router;
