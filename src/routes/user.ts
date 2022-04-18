@@ -34,38 +34,51 @@ const validateUserInfo = [
     body("profileImage") //
         .trim()
         .isBase64()
-        .withMessage("올바르지 않은 이메일 포맷입니다.")
+        .withMessage("올바르지 않은 이미지 포맷입니다.")
         .optional({ nullable: true }),
     validate,
 ];
 
 /**
- * @openapi
- * /user/info:
- *   get:
- *     description: 유저 정보 가져오기
- *     tags: [User]
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
+ * GET /user/info
+ * @summary This is the summary of the endpoint
+ * @tags User
+ * @return {User} 200 - success response
+ * @example response - 200 - example success response
+ * {
+ *    "name": "아무개",
+ *    "nickname": "Amugae2232",
+ *    "phone": "01000000000",
+ *    "email": "amugae1101@gmail.com",
+ *    "profileImage": "data"
+ * }
  */
 router.get("/info", userController.getUser);
 
 /**
- * @openapi
- * /user/info:
- *   put:
- *     tags: [User]
- *     description: 유저 정보 수정하기
- *     parameters:
- *       - name: requestBody
- *         in: body
- *         description: User's name.
- *         required: false
- *         type: string
- *     responses:
- *       200:
- *         description: Returns a mysterious string.
+ * PUT /user/info
+ * @summary This is the summary of the endpoint
+ * @tags User
+ * @param {User} request.body - user info
+ * @return {User} 200 - success response
+ * @return {Error400} 400 - bad request
+ * @example request - other payload example
+ * {
+ *    "name": "새로운이름",
+ *    "email": "newEmail@gmail.com"
+ *  }
+ * @example response - 200 - example success response
+ * {
+ *    "name": "새로운이름",
+ *    "nickname": "Amugae2232",
+ *    "phone": "01000000000",
+ *    "email": "newEmail@gmail.com",
+ *    "profileImage": "data:image/png;base64,iVBORw0KGgo"
+ *  }
+ * @example response - 400 - example error response
+ * {
+ *   "message": "올바르지 않은 휴대폰 형식입니다."
+ * }
  */
 router.put("/info", validateUserInfo, userController.updateUser);
 

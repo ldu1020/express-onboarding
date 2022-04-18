@@ -2,24 +2,12 @@ import cors from "cors";
 import express from "express";
 import logger from "morgan";
 import helmet from "helmet";
-import swaggerUi from "swagger-ui-express";
-import swaggerJSDoc from "swagger-jsdoc";
 import * as path from "path";
+import expressJSDocSwagger from "express-jsdoc-swagger";
 
 import { errorHandler, errorNotFoundHandler } from "./middlewares/errorHandler";
+import { swaggerConfig } from "./swagger/config";
 import userRoute from "./routes/user";
-
-const swaggerConfig: swaggerJSDoc.Options = {
-    definition: {
-        openapi: "3.0.0",
-        info: {
-            title: "온보딩 Api",
-            version: "1.0.0",
-        },
-    },
-    apis: ["./src/routes/*.ts"], // files containing annotations as above
-};
-const swaggerSpec = swaggerJSDoc(swaggerConfig);
 
 export const app = express();
 
@@ -37,7 +25,8 @@ app.use(logger("dev"));
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Routes
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+expressJSDocSwagger(app)(swaggerConfig); // path: /api-docs
 app.use("/user", userRoute);
 
 // Error
